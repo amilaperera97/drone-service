@@ -3,9 +3,11 @@ package com.musalasoft.droneservice.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,24 +17,26 @@ import java.util.List;
 @NoArgsConstructor
 public class LoadMedication {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "tracking_id")
-	private Integer trackingId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "tracking_id")
+    private Integer trackingId;
 
-	@Column(name = "source", columnDefinition = "VARCHAR(30) NOT NULL")
-	private String source;
+    @Column(name = "source", columnDefinition = "VARCHAR(30) NOT NULL")
+    private String source;
 
-	@Column(name = "destination", columnDefinition = "VARCHAR(30) NOT NULL")
-	private String destination;
+    @Column(name = "destination", columnDefinition = "VARCHAR(30) NOT NULL")
+    private String destination;
 
-	@Column(name = "created_date", columnDefinition = "VARCHAR(30) NOT NULL")
-	private LocalDateTime createdDate;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_date_time", nullable = false, updatable = false)
+    private Date createdDateTime;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "fk_serial_no", referencedColumnName = "serial_no")
-	private Drone drone;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_serial_no", referencedColumnName = "serial_no")
+    private Drone drone;
 
-	@OneToMany(mappedBy = "code")
-	private List<Medication> medicationList;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "loadMedication")
+    private List<Medication> medicationList;
 }

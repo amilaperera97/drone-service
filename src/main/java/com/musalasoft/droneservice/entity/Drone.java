@@ -30,7 +30,7 @@ public class Drone {
     @Column(name = "weight_limit", columnDefinition = "VARCHAR(10) NOT NULL")
     private double weightLimit;
 
-    @Column(name = "battery", precision = 3, scale = 2)
+    @Column(name = "battery", precision = 4, scale = 2)
     private BigDecimal battery;
 
     @Column(name = "drone_state", columnDefinition = "VARCHAR(15) NOT NULL")

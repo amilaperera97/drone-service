@@ -1,7 +1,6 @@
 package com.musalasoft.droneservice.dto.request;
 
 import com.musalasoft.droneservice.dto.DroneBaseInfoDto;
-import com.musalasoft.droneservice.dto.MedicationDataDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +12,8 @@ import java.util.List;
 
 @Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoadDroneDto extends DroneBaseInfoDto {
     @NotNull
     @NotBlank
@@ -25,6 +24,5 @@ public class LoadDroneDto extends DroneBaseInfoDto {
     private String destination;
 
     @NotNull
-    @NotBlank
     private List<String> medicationIds;
 }

@@ -1,6 +1,8 @@
 package com.musalasoft.droneservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +13,7 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Medication {
     @Id
     @Column(name = "code", columnDefinition = "VARCHAR(30) NOT NULL")
@@ -25,7 +28,8 @@ public class Medication {
     @Column(name = "medication_image")
     private String image;
 
-    @ManyToOne(targetEntity = LoadMedication.class)
-    @JoinColumn(name = "fk_load_medication_id", unique = true)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_load_medication_id")
+    @JsonBackReference
     private LoadMedication loadMedication;
 }
