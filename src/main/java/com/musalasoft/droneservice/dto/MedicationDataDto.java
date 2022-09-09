@@ -1,13 +1,15 @@
 package com.musalasoft.droneservice.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Pattern;
-import java.math.BigDecimal;
-
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MedicationDataDto {
 
     @Pattern(regexp = "(?=.*[A-Z])[\\p{Punct}A-Z0-9a-z ]", message = "{validation.name.allowed.invalid-name}")
