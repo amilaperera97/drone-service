@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <property name="LOG_DIR" value="/logs/drone-service"/>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS,/- UK} [%X{trace-id}] %highlight(%-5level) --- [%t] %highlight(%C{1}) : %m%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SPRING_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/drone-service-${hostname}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/drone-service-${hostname}-%d{yyyy-MM-dd, UK}.log</fileNamePattern>
+        </rollingPolicy> %d{yyyy-MM-dd, UK}
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS, UK} [%X{trace-id}] %5p --- %C{1} : %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="SPRING_LOG_APPENDER"/>
+    </logger>
+
+    <logger name="org.apache" level="error">
+        <appender-ref ref="SPRING_LOG_APPENDER"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+    </root>
+</configuration>

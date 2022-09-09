@@ -16,6 +16,9 @@
 	<properties>
 		<java.version>11</java.version>
 		<dozer.version>6.5.0</dozer.version>
+		<springfox-swagger2.version>3.0.0</springfox-swagger2.version>
+		<springfox-swagger-ui.version>3.0.0</springfox-swagger-ui.version>
+		<springfox.version>3.0.0</springfox.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -57,6 +60,21 @@
 			<artifactId>dozer-spring-boot-starter</artifactId>
 			<version>${dozer.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>${springfox-swagger2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-boot-starter</artifactId>
+			<version>${springfox.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>${springfox-swagger-ui.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -74,6 +92,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>${project.name}-${project.version}</finalName>
 	</build>
 
 </project>
