@@ -13,8 +13,10 @@ public class ControllerConstance {
     public static final String FIND_MED_INFO_BY_SERIAL_NUMBER = "/medication/{serial-number}";
     public static final String AVAILABLE = "/available";
     public static final String BATTERY_INFO_BY_SERIAL_NUMBER = "/battery/{serial-number}";
-    public static final String DETAILS_BY_SERIAL_NUMBER = "/details/{serialNumber}";
-    public static final String DELIVER = "/deliver";
+    public static final String DETAILS_BY_SERIAL_NUMBER = "/details/{serial-number}";
+    public static final String DELIVER = "/deliver/{serial-number}";
 
     public static final String MEDICATION = "/medication";
+
+    public static final String PRELOAD = "/preload";
 }

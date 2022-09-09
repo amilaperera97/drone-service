@@ -2,14 +2,17 @@ package com.musalasoft.droneservice.service.impl;
 
 import com.musalasoft.droneservice.dto.DroneState;
 import com.musalasoft.droneservice.dto.MedicationDataDto;
+import com.musalasoft.droneservice.dto.request.DeliveryDroneDto;
 import com.musalasoft.droneservice.dto.request.LoadDroneDto;
 import com.musalasoft.droneservice.dto.request.DroneDto;
 import com.musalasoft.droneservice.entity.Drone;
 import com.musalasoft.droneservice.entity.LoadMedication;
+import com.musalasoft.droneservice.entity.MedicalDelivery;
 import com.musalasoft.droneservice.entity.Medication;
 import com.musalasoft.droneservice.exception.custom.RecordNotFoundException;
 import com.musalasoft.droneservice.repository.DroneRepository;
 import com.musalasoft.droneservice.repository.LoadMedicationRepository;
+import com.musalasoft.droneservice.repository.MedicationDeliveryRepository;
 import com.musalasoft.droneservice.repository.MedicationRepository;
 import com.musalasoft.droneservice.service.DroneService;
 import com.musalasoft.droneservice.util.converter.EntityConverter;
@@ -18,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -32,6 +36,8 @@ public class DroneServiceImpl implements DroneService {
     private final LoadMedicationRepository loadMedicationRepository;
     private final MedicationRepository medicationRepository;
     private final EntityConverter entityConverter;
+
+    private final MedicationDeliveryRepository medicationDeliveryRepository;
 
     @Override
     public DroneDto register(DroneDto registerDrone) {
@@ -121,6 +127,30 @@ public class DroneServiceImpl implements DroneService {
         Optional<Drone> optionalDrone = droneRepository.findById(serialNumber);
         optionalDrone.orElseThrow(() -> new RuntimeException("Invalid Drone Id!"));
         return entityConverter.convert(optionalDrone.get(), DroneDto.class);
+    }
+
+    @Override
+    public DeliveryDroneDto deliverMedication(String serialNumber) {
+        updateDroneState(serialNumber, DroneState.DELIVERING);
+
+        Optional<Drone> optionalDrone = droneRepository.findById(serialNumber);
+        Optional<LoadMedication> optionalLoadMedication = loadMedicationRepository.findLoadMedicationByDrone(optionalDrone.get());
+
+        MedicalDelivery medicalDelivery = MedicalDelivery.builder()
+                .deliveryTime(LocalDateTime.now())
+                .loadMedication(optionalLoadMedication.get())
+                .build();
+
+        MedicalDelivery savedDate = medicationDeliveryRepository.save(medicalDelivery);
+        if (savedDate != null) {
+            updateDroneState(serialNumber, DroneState.DELIVERED);
+        } else {
+            updateDroneState(serialNumber, DroneState.LOADED);
+        }
+        DeliveryDroneDto deliveryDroneDto = new DeliveryDroneDto();
+        deliveryDroneDto.setSerialNumber(serialNumber);
+        
+        return deliveryDroneDto;
     }
 
 

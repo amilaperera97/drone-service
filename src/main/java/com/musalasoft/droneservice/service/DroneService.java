@@ -2,6 +2,7 @@ package com.musalasoft.droneservice.service;
 
 import com.musalasoft.droneservice.dto.DroneState;
 import com.musalasoft.droneservice.dto.MedicationDataDto;
+import com.musalasoft.droneservice.dto.request.DeliveryDroneDto;
 import com.musalasoft.droneservice.dto.request.LoadDroneDto;
 import com.musalasoft.droneservice.dto.request.DroneDto;
 
@@ -16,4 +17,6 @@ public interface DroneService {
     List<DroneDto> findDroneByState(DroneState droneState);
 
     DroneDto findDrone(String serialNumber);
+
+    DeliveryDroneDto deliverMedication(String serialNumber);
 }
