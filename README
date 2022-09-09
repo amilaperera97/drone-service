@@ -1,0 +1,19 @@
+Assumptions:
+	Medication is already registered to the application.
+	Drone is in IDLE state when registering
+	Medication is loaded weight ascending order
+
+Build command
+#### Run following code on the source dir
+mvn clean install
+### Run following code on the target folder
+java -jar drone-service-1.0.0
+
+
+##Execution instruction
+Data preload endpoint : http://localhost:9090/drone-service/api/v1/preload
+
+##Swagger document can be accessible via below url
+http://localhost:9090/drone-service/swagger-ui/index.html
+
+###Insomnia API collection can be found under root directory as 'Insomnia-rest-apis.json'
